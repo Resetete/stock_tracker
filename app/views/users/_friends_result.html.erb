@@ -3,21 +3,27 @@
 </div>
 
 <% if @friend %>
-  <div class="card card-header results-block">
-    <strong>Name:</strong> <%= @friend.full_name %>
-    <% if current_user.can_track_friend?(@friend.first_name, current_user.full_name, @friend.full_name) %>
-      <%= link_to 'Add to friends', friendships_path(user: current_user, friend: @friend), class: "btn btn-success ml-3", method: :post %>
-    <% else %>
-      <span class="badge badge-secondary">
-        You are already tracking
-        <% if !current_user.under_friend_limit? %>
-          10 friends
-        <% elsif current_user.self_tracking?(current_user.full_name, @friend.full_name) %>
-          yourself :)
-        <% else !current_user.friend_already_tracked?(@friend.first_name) %>
-          this friend
-        <% end %>
-      </span>
-    <% end %>
+  <div class="mb-3">
+  <% @friend.to_a.each do |friend| %>
+      <div class="card card-header col-sm-7">
+        <div class="results-block">
+          <strong>Name:</strong> <%= friend.full_name %>
+          <% if current_user.can_track_friend?(friend.first_name, current_user.full_name, friend.full_name) %>
+          <%= link_to 'Add to friends', friendships_path(user: current_user, friend: friend), class: "btn btn-success ml-3", method: :post %>
+          <% else %>
+          <span class="badge badge-secondary">
+            You are already tracking
+            <% if !current_user.under_friend_limit? %>
+            10 friends
+            <% elsif current_user.self_tracking?(current_user.full_name, friend.full_name) %>
+            yourself :)
+            <% else !current_user.friend_already_tracked?(friend.first_name) %>
+            this friend
+            <% end %>
+          </span>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
   </div>
 <% end %>
