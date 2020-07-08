@@ -1,0 +1,21 @@
+<div class="results-block">
+  <%= render 'layouts/messages' %>
+</div>
+
+<% if @friend %>
+  <div class="card card-header results-block">
+    <strong>Name:</strong> <%= @friend.full_name %>
+    <% if current_user.can_track_friend?(@friend.first_name) %>
+      <%= link_to 'Add to friends', friendships_path(user: current_user, friend: @friend), class: "btn btn-success ml-3", method: :post %>
+    <% else %>
+      <span class="badge badge-secondary">
+        You are already tracking
+        <% if !current_user.under_friend_limit? %>
+          10 friends
+        <% else !current_user.friend_already_tracked?(@friend.first_name) %>
+          this friend
+        <% end %>
+      </span>
+    <% end %>
+  </div>
+<% end %>

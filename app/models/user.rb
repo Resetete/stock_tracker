@@ -28,4 +28,29 @@ class User < ApplicationRecord
   def can_track_stock?(ticker_symbol)
     under_stock_limit? && !stock_already_tracked?(ticker_symbol)
   end
+
+  def under_friend_limit?
+    friends.count < 10
+  end
+
+  def self_tracking? # check if the current_user is adding themself
+
+  end
+
+  def friend_already_tracked?(friends_first_name)
+    search_result = check_db(friends_first_name) # check if the friend exists in db
+    return false unless search_result # if it doesn't exist return false
+    evaluation = search_result.to_a.map do |result|
+      friends.where(id: result.id).exists? # check if this friend is tracked by the user (see friendships table)
+    end
+    evaluation.any? # check if there is any true in the results array
+  end
+
+  def can_track_friend?(friends_first_name)
+    under_friend_limit? && !friend_already_tracked?(friends_first_name)
+  end
+
+  def check_db(first_name)
+    User.where(first_name: first_name)
+  end
 end
