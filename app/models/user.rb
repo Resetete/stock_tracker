@@ -33,8 +33,8 @@ class User < ApplicationRecord
     friends.count < 10
   end
 
-  def self_tracking? # check if the current_user is adding themself
-
+  def self_tracking?(current_user_full_name, friends_full_name) # check if the current_user is adding themself
+    current_user_full_name == friends_full_name
   end
 
   def friend_already_tracked?(friends_first_name)
@@ -46,8 +46,8 @@ class User < ApplicationRecord
     evaluation.any? # check if there is any true in the results array
   end
 
-  def can_track_friend?(friends_first_name)
-    under_friend_limit? && !friend_already_tracked?(friends_first_name)
+  def can_track_friend?(friends_first_name, current_user_full_name, friends_full_name)
+    under_friend_limit? && !friend_already_tracked?(friends_first_name) && !self_tracking?(current_user_full_name, friends_full_name)
   end
 
   def check_db(first_name)
