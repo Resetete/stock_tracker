@@ -1,7 +1,10 @@
 class FriendshipsController < ApplicationController
 
   def create
-    
+    friend = User.find(params[:friend])
+    @friendship = Friendship.create(user: current_user, friend: friend)
+    flash[:notice] = "Your friend #{friend.full_name} was sucessfully added"
+    redirect_to my_friends_path
   end
 
   def destroy
