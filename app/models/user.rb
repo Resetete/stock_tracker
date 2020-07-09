@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  before_save :capitalize_names
 
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
@@ -65,4 +66,12 @@ class User < ApplicationRecord
       nil
     end
   end
+
+  private
+
+  def capitalize_names
+    first_name.capitalize!
+    last_name.capitalize!
+  end
+
 end
