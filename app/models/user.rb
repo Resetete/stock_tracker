@@ -37,8 +37,8 @@ class User < ApplicationRecord
     current_user_full_name == friends_full_name
   end
 
-  def friend_already_tracked?(friends_first_name)
-    search_result = check_db(friends_first_name) # check if the friend exists in db
+  def friend_already_tracked?(friends_first_name, friends_last_name)
+    search_result = check_db(friends_first_name, friends_last_name) # check if the friend exists in db
     return false unless search_result # if it doesn't exist return false
     evaluation = search_result.to_a.map do |result|
       friends.where(id: result.id).exists? # check if this friend is tracked by the user (see friendships table)
@@ -46,12 +46,12 @@ class User < ApplicationRecord
     evaluation.any? # check if there is any true in the results array
   end
 
-  def can_track_friend?(friends_first_name, current_user_full_name, friends_full_name)
-    under_friend_limit? && !friend_already_tracked?(friends_first_name) && !self_tracking?(current_user_full_name, friends_full_name)
+  def can_track_friend?(friends_first_name, friends_last_name, current_user_full_name, friends_full_name)
+    under_friend_limit? && !friend_already_tracked?(friends_first_name, friends_last_name) && !self_tracking?(current_user_full_name, friends_full_name)
   end
 
-  def check_db(first_name)
-    User.where(first_name: first_name)
+  def check_db(first_name, last_name)
+    User.where(first_name: first_name, last_name: last_name)
   end
 
   def self.find_friend(friend_first_name, friend_last_name)
