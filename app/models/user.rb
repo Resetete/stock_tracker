@@ -53,4 +53,16 @@ class User < ApplicationRecord
   def check_db(first_name)
     User.where(first_name: first_name)
   end
+
+  def self.find_friend(friend_first_name, friend_last_name)
+    if !friend_first_name.empty? && !friend_last_name.empty?
+      where(first_name: friend_first_name, last_name: friend_last_name)
+    elsif friend_last_name.empty? && !friend_first_name.empty?
+      where(first_name: friend_first_name)
+    elsif friend_first_name.empty? && !friend_last_name.empty?
+      where(last_name: friend_last_name)
+    else
+      nil
+    end
+  end
 end
