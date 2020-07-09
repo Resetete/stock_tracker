@@ -34,8 +34,8 @@ class User < ApplicationRecord
     friends.count < 10
   end
 
-  def self_tracking?(current_user_full_name, friends_full_name) # check if the current_user is adding themself
-    current_user_full_name == friends_full_name
+  def except_current_user(users)
+    users.reject { |user| user.id == self.id }
   end
 
   def friend_already_tracked?(friends_first_name, friends_last_name)
@@ -47,8 +47,8 @@ class User < ApplicationRecord
     evaluation.any? # check if there is any true in the results array
   end
 
-  def can_track_friend?(friends_first_name, friends_last_name, current_user_full_name, friends_full_name)
-    under_friend_limit? && !friend_already_tracked?(friends_first_name, friends_last_name) && !self_tracking?(current_user_full_name, friends_full_name)
+  def can_track_friend?(friends_first_name, friends_last_name)
+    under_friend_limit? && !friend_already_tracked?(friends_first_name, friends_last_name)
   end
 
   def check_db(first_name, last_name)
@@ -65,6 +65,31 @@ class User < ApplicationRecord
     else
       nil
     end
+  end
+
+  def self.search(param)
+    # remove any extra characters such as spaces
+    param.strip!
+    # need to check if the param matches any of our fields data
+    to_send_back = (first_name_matches(param) + last_name_matches(param) + email_matches(param)).uniqu
+    return nil unless to_send_back
+    to_send_back
+  end
+
+  def self.first_name_matches(param)
+    matches('first_name', param)
+  end
+
+  def self.last_name_matches(param)
+    matches('last_name', param)
+  end
+
+  def self.email_matches(param)
+    matches('email', param)
+  end
+
+  def self.matches(field_name, param)
+    where("#{field_name} like ?", "%#{param}%")
   end
 
   private
