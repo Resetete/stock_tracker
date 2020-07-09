@@ -55,36 +55,28 @@ class User < ApplicationRecord
     User.where(first_name: first_name, last_name: last_name)
   end
 
-  def self.find_friend(friend_first_name, friend_last_name)
-    if !friend_first_name.empty? && !friend_last_name.empty?
-      where(first_name: friend_first_name, last_name: friend_last_name)
-    elsif friend_last_name.empty? && !friend_first_name.empty?
-      where(first_name: friend_first_name)
-    elsif friend_first_name.empty? && !friend_last_name.empty?
-      where(last_name: friend_last_name)
-    else
-      nil
-    end
-  end
-
-  def self.search(param)
+  def self.search(friend_first_name, friend_name_email)
     # remove any extra characters such as spaces
-    param.strip!
+    friend_first_name.strip!
+    friend_name_email.strip!
     # need to check if the param matches any of our fields data
-    to_send_back = (first_name_matches(param) + last_name_matches(param) + email_matches(param)).uniqu
+    to_send_back = (first_name_matches(friend_first_name) + last_name_matches(friend_name_email) + email_matches(friend_name_email)).uniq
     return nil unless to_send_back
     to_send_back
   end
 
   def self.first_name_matches(param)
+    return [] unless !param.empty?
     matches('first_name', param)
   end
 
   def self.last_name_matches(param)
+    return [] unless !param.empty?
     matches('last_name', param)
   end
 
   def self.email_matches(param)
+    return [] unless !param.empty?
     matches('email', param)
   end
 
