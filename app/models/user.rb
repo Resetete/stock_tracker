@@ -30,10 +30,6 @@ class User < ApplicationRecord
     under_stock_limit? && !stock_already_tracked?(ticker_symbol)
   end
 
-  def under_friend_limit?
-    friends.count < 10
-  end
-
   def except_current_user(users)
     users.reject { |user| user.id == self.id }
   end
@@ -48,7 +44,7 @@ class User < ApplicationRecord
   end
 
   def can_track_friend?(friends_first_name, friends_last_name)
-    under_friend_limit? && !friend_already_tracked?(friends_first_name, friends_last_name)
+    !friend_already_tracked?(friends_first_name, friends_last_name)
   end
 
   def check_db(first_name, last_name)
