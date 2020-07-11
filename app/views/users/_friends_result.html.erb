@@ -7,8 +7,8 @@
   <% @friends.to_a.each do |friend| %>
       <div class="card card-header col-sm-7">
         <div class="results-block">
-          <strong>Name:</strong> <%= friend.full_name %>
-            <%= link_to 'View profile', '#', class: "btn btn-success ml-3", method: :post %>
+          <strong> Name: </strong> <%= friend.full_name %>
+            <%= link_to 'View profile', user_path(friend), class: "btn btn-success ml-3" %>
           <% if current_user.can_track_friend?(friend.first_name, friend.last_name) %>
             <%= link_to 'Follow friend', friendships_path(user: current_user, friend: friend), class: "btn btn-success ml-3", method: :post %>
           <% else %>

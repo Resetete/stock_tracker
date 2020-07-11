@@ -6,7 +6,6 @@
           <th scope="col"> <%= pluralize(current_user.friends.count, 'Friend') %> </th>
           <th scope="col"> Last name </th>
           <th scope="col"> Number of tracked stocks </th>
-          <th scope="col"> Profile </th>
           <th scope="col"> Actions </th>
         </tr>
       </thead>
@@ -16,8 +15,10 @@
           <th scope="row"> <%= friend.first_name %> </th>
           <td> <%= friend.last_name %> </td>
           <td> <%= friend.stocks.count %> </td>
-          <td> <%= link_to 'View profile', '#', class: 'btn btn-info btn-sm' %> </td>
-          <td> <%= link_to 'Stop following', friendship_path(friend), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-sm' %> </td>
+          <td>
+            <%= link_to 'View profile', user_path(friend), class: 'btn btn-info btn-sm mr-3' %>
+            <%= link_to 'Stop following', friendship_path(friend), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-sm' %>
+          </td>
         </tr>
         <% end %>
       </tbody>
