@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   get 'my_friends', to: 'users#my_friends'
   get 'search_stock', to: 'stocks#search'
   get 'search_friend', to: 'friends#search'
-  resources :users, only: [:show]
+  resources :view_users, controller: 'users', only: [:show]
   devise_for :users
 end
