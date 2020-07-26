@@ -17,6 +17,21 @@
         <li class="nav-item <%= 'active' if request.path == my_profit_path %> ">
           <%= link_to 'My Profit', my_profit_path, class: "nav-link" %>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Wallets
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to my_profit_path, class: "dropdown-item" do %>
+              <%= fa_icon 'eye' %>
+              <% current_user.wallets.each do |wallet| %>
+                <%= wallet.name.capitalize %> profit
+              <% end %>
+            <% end %>
+          </div>
+        </li>
+
         <li class="nav-item <%= 'active' if request.path == my_friends_path %> ">
           <%= link_to 'My Friends', my_friends_path, class: "nav-link" %>
         </li>
