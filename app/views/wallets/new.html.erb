@@ -1,10 +1,8 @@
 <h1> Profit Calculator </h1>
 
-<h2> Add data of trade </h2>
+<h2> Add new wallet event </h2>
 
-<form>
 <%= form_with(model: @wallet, class: "shadow p-3 mb-5 mt-5 bg-white rounded", local: true) do |f| %>
-
   <div class="form-group">
     <%= f.label :ticker, 'Cryptocurrency', class: "form-label" %>
     <%= f.select(:ticker, options_for_select(@ticker_options), { prompt: 'Choose currency' }, { class: 'form-control' })  %>
@@ -25,5 +23,5 @@
     <%= f.label :trading_fee, 'Trading fee', class: "form-label" %>
     <%= f.text_field :trading_fee, class:"form-control" %>
   </div>
-    <%= f.submit 'Create', class: "btn btn-primary" %>
+    <%= f.submit class: "btn btn-primary" %>
 <% end %>
