@@ -15,7 +15,7 @@ class WalletsController < ApplicationController
   def update
     if @wallet.update(wallet_params)
       flash[:notice] = 'Wallet entry was successfully updated'
-      redirect_to @wallet
+      redirect_to my_profit_path
     else
       render 'edit'
     end
