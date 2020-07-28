@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-  <a href="#" class="btn btn-primary">Go somewhere</a>
+  <%= link_to 'Edit', edit_wallet_path(@wallet), class: "btn btn-primary" %>
   <div class="card-footer text-muted">
     Created at: <%= time_ago_in_words(@wallet.created_at) %> ago - Updated at: <%= time_ago_in_words(@wallet.updated_at) %> ago
   </div>

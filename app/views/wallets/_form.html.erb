@@ -1,0 +1,23 @@
+<%= form_with(model: @wallet, class: "shadow p-3 mb-5 mt-5 bg-white rounded", local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :ticker, 'Cryptocurrency', class: "form-label" %>
+    <%= f.select(:ticker, options_for_select(@ticker_options), { prompt: 'Choose currency' }, { class: 'form-control' })  %>
+  </div>
+  <div class="form-group">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name, class:"form-control"  %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buy_date, 'Date of buy', class: "form-label" %>
+    <%= f.date_field :buy_date, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buy_price, 'Price at buy', class: "form-label" %>
+    <%= f.text_field :buy_price, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :trading_fee, 'Trading fee', class: "form-label" %>
+    <%= f.text_field :trading_fee, class:"form-control" %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
