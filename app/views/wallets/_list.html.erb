@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-10">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col"> Name </th>
+          <th scope="col"> Current profit </th>
+          <th scope="col"> Last updated </th>
+          <th scope="col"> Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @wallets.each do |wallet| %>
+        <tr>
+          <th scope="row"> <%= wallet.name %> </th>
+          <td> <%= wallet.current_profit %> </td>
+          <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
+          <td> Edit | Sold? | Update </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= link_to 'Add new', new_wallet_path, class: 'nav-link' %>
+  </div>
+</div>
