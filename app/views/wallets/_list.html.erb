@@ -18,11 +18,11 @@
           <td> <%= wallet.current_profit %> </td>
           <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
           <td>
-            <%= link_to 'Edit', edit_wallet_path(wallet), class: 'nav-link' %>
+            <%= link_to 'Edit', edit_wallet_path(wallet), class: 'badge' %>
             |
-            <%= link_to 'Sold?', '#', class: 'nav-link' %>
+            <%= link_to 'Sold?', '#', class: 'badge' %>
             |
-            <%= link_to 'Update current profit', '#', class: 'nav-link' %>
+            <%= link_to 'Update current profit', '#', class: 'badge' %>
            </td>
         </tr>
         <% end %>
