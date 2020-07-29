@@ -13,6 +13,7 @@ class WalletsController < ApplicationController
   end
 
   def update
+    set_current_profit
     if @wallet.update(wallet_params)
       flash[:notice] = 'Wallet entry was successfully updated'
       redirect_to my_profit_path
@@ -27,6 +28,7 @@ class WalletsController < ApplicationController
 
   def create
     @wallet = Wallet.new(wallet_params)
+    set_current_profit
     @wallet.user = current_user
     if @wallet.save
       flash[:notice] = "Wallet entry successfully created"
@@ -40,7 +42,7 @@ class WalletsController < ApplicationController
   private
 
   def wallet_params
-    params.require(:wallet).permit(:ticker, :name, :buy_date, :buy_price, :trading_fee)
+    params.require(:wallet).permit(:ticker, :name, :buy_date, :buy_price, :trading_fee, :selling_fee, :amount_bought)
   end
 
   def set_wallet_entry
@@ -56,5 +58,9 @@ class WalletsController < ApplicationController
 
   def get_ticker_options
     @ticker_options = Wallet.get_ticker_options
+  end
+
+  def set_current_profit
+    @wallet.current_profit = @wallet.calc_current_profit(@wallet.ticker, @wallet.amount_bought, @wallet.buy_price)
   end
 end
