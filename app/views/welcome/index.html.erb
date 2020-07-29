@@ -1,3 +1,9 @@
 <h1> Welcome to finance tracker </h1>
 
 <p> This app allows to track different stock prices and to calculate your profit trading cryptocurrency. </p>
+
+<h2> Popular Cryptocurrencies </h2>
+
+<%= render 'wallets/coins' %>
+
+<%= link_to 'Add new wallet entry', new_wallet_path, class: 'btn btn-info'%>
