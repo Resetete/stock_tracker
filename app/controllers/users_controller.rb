@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def my_profit
     @user = current_user
     @wallets = current_user.wallets
+    @total_profit = @wallets.sum(:current_profit)
   end
 
   def show
