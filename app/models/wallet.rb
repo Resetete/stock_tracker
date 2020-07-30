@@ -6,7 +6,7 @@ class Wallet < ApplicationRecord
   end
 
   def calc_current_profit(ticker, amount_bought, buy_price)
-    profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price) - amount_bought
+    profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price) - amount_bought if !value_sold_crypto_at_current_price(ticker, amount_bought, buy_price).nil?
     if fees?
       if profit > 0
         current_profit = profit - fees
@@ -23,7 +23,7 @@ class Wallet < ApplicationRecord
   end
 
   def value_sold_crypto_at_current_price(ticker, amount_bought, buy_price)
-    bought_crypto(amount_bought, buy_price) * Stock.new_lookup(ticker).last_price
+    bought_crypto(amount_bought, buy_price) * Stock.new_lookup(ticker).last_price if !Stock.new_lookup(ticker).nil?
   end
 
   def fees

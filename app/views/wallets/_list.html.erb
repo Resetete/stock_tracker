@@ -5,6 +5,8 @@
         <tr>
           <th scope="col"> Ticker </th>
           <th scope="col"> Name </th>
+          <th scope="col"> Bought on </th>
+          <th scope="col"> Invested €</th>
           <th scope="col"> Current profit € </th>
           <th scope="col"> Last updated </th>
           <th scope="col"> Actions </th>
@@ -14,8 +16,15 @@
         <% @wallets.each do |wallet| %>
         <tr>
           <th scope="row"> <%= wallet.ticker %> </th>
-          <th scope="row"> <%= wallet.name %> </th>
-          <td> <%= wallet.current_profit %> </td>
+          <td> <%= wallet.name %> </td>
+          <td> <%= wallet.buy_date.strftime("%Y-%m-%d") if wallet.buy_date %> </td>
+          <td> <%= wallet.amount_bought %> </td>
+          <td> <% if !wallet.current_profit.nil? %>
+                  <%= wallet.current_profit %>
+              <% else %>
+                  <p class="badge badge-warning"> Error, please try again </p>
+              <% end %>
+          </td>
           <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
           <td>
             <%= link_to 'Edit', edit_wallet_path(wallet), class: 'badge' %>
