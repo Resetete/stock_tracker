@@ -1,0 +1,9 @@
+<h1> My profit </h1>
+
+<% if !@wallets.empty? %>
+  <%= render 'wallets/list' %>
+<% end %>
+
+<h3> Total profit if everything would be sold now </h3>
+
+<h4> <span class="badge badge-info"> <%= @total_profit %> € </span> </h4>

@@ -12,3 +12,9 @@
     Sign up
   <% end %>
 </div>
+
+<h2> Popular Cryptocurrencies </h2>
+
+<%= render 'wallets/coins' %>
+
+<%= link_to 'Add new wallet entry', new_wallet_path, class: 'btn btn-info'%>

@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-10">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col"> Ticker </th>
+          <th scope="col"> Name </th>
+          <th scope="col"> Bought on </th>
+          <th scope="col"> Invested €</th>
+          <th scope="col"> Course when bought </th>
+          <th scope="col"> Current profit € </th>
+          <th scope="col"> Last updated </th>
+          <th scope="col"> Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @wallets.each do |wallet| %>
+        <tr>
+          <th scope="row"> <%= wallet.ticker %> </th>
+          <td> <%= wallet.name %> </td>
+          <td> <%= wallet.buy_date.strftime("%d-%m-%Y") if wallet.buy_date %> </td>
+          <td> <%= wallet.amount_bought %> </td>
+          <td> <%= wallet.buy_price %> </td>
+          <td>
+              <% if !wallet.current_profit.nil? %>
+                  <p id="profits-<%=wallet.id%>"> <%= wallet.current_profit %> </p>
+              <% else %>
+                  <p class="badge badge-warning"> Error, please try again </p>
+              <% end %>
+          </td>
+          <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
+          <td>
+            <%= link_to 'Edit', edit_wallet_path(wallet), class: 'badge' %>
+            |
+            <%= link_to 'Delete', wallet_path(wallet), method: :delete, class: 'badge', data: { confirm: 'Are you sure?' } %>
+            |
+            <%= link_to 'Update profit', "update_profit/#{wallet.id}", method: :get, remote: true, class: 'badge' %>
+           </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= link_to 'Add new', new_wallet_path, class: 'btn btn-info mb-5' %>
+  </div>
+</div>

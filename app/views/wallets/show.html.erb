@@ -1,0 +1,39 @@
+<h1> Your wallet entry </h1>
+
+<div class="card">
+  <div class="card-header text-center">
+    <%= @wallet.ticker %>
+  </div>
+  <div class="card-body text-left">
+    <div class= "row">
+      <div class= "col-sm">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"> Name: </li>
+          <li class="list-group-item"> Price at buy: </li>
+          <li class="list-group-item"> Buy date: </li>
+          <li class="list-group-item"> Trading fee: </li>
+          <li class="list-group-item"> Current profit: </li>
+          <li class="list-group-item"> Sell price: </li>
+          <li class="list-group-item"> Date of sell: </li>
+          <li class="list-group-item"> Owner: </li>
+        </ul>
+      </div>
+      <div class="col-sm">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item min-height"> <%= @wallet.name %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.buy_price %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.buy_date %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.trading_fee %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.current_profit %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.sell_price %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.sell_date %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.user.first_name %> <%= @wallet.user.last_name %> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <%= link_to 'Edit', edit_wallet_path(@wallet), class: "btn btn-primary" %>
+  <div class="card-footer text-muted">
+    Created at: <%= time_ago_in_words(@wallet.created_at) %> ago - Updated at: <%= time_ago_in_words(@wallet.updated_at) %> ago
+  </div>
+</div>
