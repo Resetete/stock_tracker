@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'my_profit', to: 'users#my_profit'
   get 'search_stock', to: 'stocks#search'
   get 'search_friend', to: 'friends#search'
+  get 'update_profit/:id', to: 'wallets#update_profit'
+
   resources :users, only: [:show]
   devise_for :users
 end

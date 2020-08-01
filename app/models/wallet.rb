@@ -6,17 +6,19 @@ class Wallet < ApplicationRecord
   end
 
   def calc_current_profit(ticker, amount_bought, buy_price)
-    profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price) - amount_bought
-    if fees?
-      if profit > 0
-        profit - fees
-      else
-        profit + fees
-      end
-    elsif value_sold_crypto_at_current_price(ticker, amount_bought, buy_price).nil?
-      profit
-    else
+    if value_sold_crypto_at_current_price(ticker, amount_bought, buy_price).nil?
       nil
+    else
+      profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price) - amount_bought
+      if fees?
+        if profit > 0
+          profit - fees
+        else
+          profit + fees
+        end
+      else
+        profit
+      end
     end
   end
 
@@ -25,7 +27,12 @@ class Wallet < ApplicationRecord
   end
 
   def value_sold_crypto_at_current_price(ticker, amount_bought, buy_price)
-    bought_crypto(amount_bought, buy_price) * Stock.new_lookup(ticker).last_price
+    begin
+      bought_crypto(amount_bought, buy_price) * Stock.new_lookup(ticker).last_price
+    rescue => e
+      p "Error occured: #{e}"
+      nil
+    end
   end
 
   def fees

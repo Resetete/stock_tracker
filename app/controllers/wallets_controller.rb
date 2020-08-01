@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :set_wallet_entry, only: [:show, :edit, :update]
+  before_action :set_wallet_entry, only: [:show, :edit, :update, :update_profit]
   before_action :require_same_user, only: [:show]
   before_action :get_ticker_options, only: [:new, :edit]
 
@@ -36,6 +36,18 @@ class WalletsController < ApplicationController
     else
       flash[:alert] = "Something went wrong"
       render 'new'
+    end
+  end
+
+  def update_profit
+    if @wallet
+      updated_profit = @wallet.calc_current_profit(@wallet.ticker, @wallet.amount_bought, @wallet.buy_price)
+      @wallet.update(current_profit: updated_profit)
+      respond_to do |format|
+        format.js { render partial: 'wallets/updated_profit_result' }
+      end
+    else
+      flash.now[:alert] = "Something went wrong, please try again"
     end
   end
 

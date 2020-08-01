@@ -21,8 +21,9 @@
           <td> <%= wallet.buy_date.strftime("%Y-%m-%d") if wallet.buy_date %> </td>
           <td> <%= wallet.amount_bought %> </td>
           <td> <%= wallet.buy_price %> </td>
-          <td> <% if !wallet.current_profit.nil? %>
-                  <%= wallet.current_profit %>
+          <td>
+              <% if !wallet.current_profit.nil? %>
+                  <p id="profits-<%=wallet.id%>"> <%= wallet.current_profit %> </p>
               <% else %>
                   <p class="badge badge-warning"> Error, please try again </p>
               <% end %>
@@ -33,7 +34,7 @@
             |
             <%= link_to 'Sold?', '#', class: 'badge' %>
             |
-            <%= link_to 'Update current profit', '#', class: 'badge' %>
+            <%= link_to 'Update current profit', "update_profit/#{wallet.id}", method: :get, remote: true, class: 'badge' %>
            </td>
         </tr>
         <% end %>
