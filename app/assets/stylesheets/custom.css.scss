@@ -1,5 +1,27 @@
 @import 'bootstrap/dist/css/bootstrap';
 
+.jumbotron {
+  background-image: asset-url('background_welcome.jpg') !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 90vh;
+}
+
+#freepik-link {
+  font-size: 0.8em;
+  position: relative;
+  top: 35vh;
+  a {
+    color: white;
+    text-shadow: 1px 1px black;
+  }
+}
+
+.highlighting {
+  font-weight: bold;
+  text-shadow: 2px 2px #17A2B8;
+  font-size: 4em;
+}
 
 .search-area {
   padding-top: 50px;
