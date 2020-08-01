@@ -7,6 +7,7 @@
           <th scope="col"> Name </th>
           <th scope="col"> Bought on </th>
           <th scope="col"> Invested €</th>
+          <th scope="col"> Course when bought </th>
           <th scope="col"> Current profit € </th>
           <th scope="col"> Last updated </th>
           <th scope="col"> Actions </th>
@@ -19,6 +20,7 @@
           <td> <%= wallet.name %> </td>
           <td> <%= wallet.buy_date.strftime("%Y-%m-%d") if wallet.buy_date %> </td>
           <td> <%= wallet.amount_bought %> </td>
+          <td> <%= wallet.buy_price %> </td>
           <td> <% if !wallet.current_profit.nil? %>
                   <%= wallet.current_profit %>
               <% else %>

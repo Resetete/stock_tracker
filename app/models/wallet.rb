@@ -2,7 +2,7 @@ class Wallet < ApplicationRecord
   belongs_to :user
 
   def self.get_ticker_options
-    %w[ETHEUR BTCEUR USDCEUR XLMEUR BCHEUR ZECEUR REPEUR BATEUR XRPEUR LTCEUR ZRXEUR EOSEUR OXTEUR DAIEUR XTZEUR YCCEUR].freeze
+    %w[ETHEUR BTCEUR USDCEUR XLMEUR BCHEUR ZECEUR REPEUR BATEUR XRPEUR LTCEUR ZRXEUR EOSEUR OXTEUR DAIEUR XTZEUR].freeze
   end
 
   def calc_current_profit(ticker, amount_bought, buy_price)
