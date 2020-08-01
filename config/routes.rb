@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   get 'search_friend', to: 'friends#search'
   get 'update_profit/:id', to: 'wallets#update_profit'
 
-  get 'view_user', to: 'users#show' 
+  resources :view_users, controller: 'users', only: [:show] 
   devise_for :users
 end
