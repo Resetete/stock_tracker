@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :set_wallet_entry, only: [:show, :edit, :update, :update_profit]
+  before_action :set_wallet_entry, only: [:show, :edit, :update, :update_profit, :destroy]
   before_action :require_same_user, only: [:show]
   before_action :get_ticker_options, only: [:new, :edit]
 
@@ -7,19 +7,6 @@ class WalletsController < ApplicationController
   end
 
   def show
-  end
-
-  def edit
-  end
-
-  def update
-    set_current_profit
-    if @wallet.update(wallet_params)
-      flash[:notice] = 'Wallet entry was successfully updated'
-      redirect_to my_profit_path
-    else
-      render 'edit'
-    end
   end
 
   def new
@@ -37,6 +24,25 @@ class WalletsController < ApplicationController
       flash[:alert] = "Something went wrong"
       render 'new'
     end
+  end
+
+  def edit
+  end
+
+  def update
+    set_current_profit
+    if @wallet.update(wallet_params)
+      flash[:notice] = 'Wallet entry was successfully updated'
+      redirect_to my_profit_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @wallet.destroy
+    flash[:notice] = "#{@wallet.ticker} bought on #{@wallet.buy_date.strftime("%d-%m-%Y")} was successfully deleted"
+    redirect_to my_profit_path
   end
 
   def update_profit
