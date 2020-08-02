@@ -5,11 +5,11 @@ class Wallet < ApplicationRecord
     %w[ETH BTC USDC XLM BCH ZEC REP BAT XRP LTC ZRX EOS OXT DAI XTZ COMP KNC ALGO ATOM DASH ETC MKR OMG].freeze
   end
 
-  def calc_current_profit(ticker, amount_bought, buy_price)
-    if value_sold_crypto_at_current_price(ticker, amount_bought, buy_price).nil?
+  def calc_current_profit(ticker, amount_bought, buy_price, currency ='EUR')
+    if value_sold_crypto_at_current_price(ticker, amount_bought, buy_price, currency ='EUR').nil?
       nil
     else
-      profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price) - amount_bought
+      profit = value_sold_crypto_at_current_price(ticker, amount_bought, buy_price, currency ='EUR') - amount_bought
       if fees?
         if profit > 0
           profit - fees
@@ -26,9 +26,9 @@ class Wallet < ApplicationRecord
     amount_bought / buy_price
   end
 
-  def value_sold_crypto_at_current_price(ticker, amount_bought, buy_price)
+  def value_sold_crypto_at_current_price(ticker, amount_bought, buy_price, currency = 'EUR')
     begin
-      bought_crypto(amount_bought, buy_price) * Stock.new_crypto_lookup(ticker).last_price
+      bought_crypto(amount_bought, buy_price) * Stock.new_crypto_lookup(ticker, currency = 'EUR').last_price
     rescue => e
       p "Error occured: #{e}"
       nil

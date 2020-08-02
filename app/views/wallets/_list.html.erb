@@ -6,9 +6,9 @@
           <th scope="col"> Ticker </th>
           <th scope="col"> Name </th>
           <th scope="col"> Bought on </th>
-          <th scope="col"> Invested €</th>
+          <th scope="col"> Invested</th>
           <th scope="col"> Course when bought </th>
-          <th scope="col"> Current profit € </th>
+          <th scope="col"> Current profit</th>
           <th scope="col"> Last updated </th>
           <th scope="col"> Actions </th>
         </tr>
@@ -19,11 +19,11 @@
           <th scope="row"> <%= wallet.ticker %> </th>
           <td> <%= wallet.name %> </td>
           <td> <%= wallet.buy_date.strftime("%d-%m-%Y") if wallet.buy_date %> </td>
-          <td> <%= wallet.amount_bought %> </td>
-          <td> <%= wallet.buy_price %> </td>
+          <td> <%= wallet.amount_bought %> <span class="badge"> <%= wallet.currency %> </span> </td>
+          <td> <%= wallet.buy_price %> <span class="badge"> <%= wallet.currency %> </td>
           <td>
               <% if !wallet.current_profit.nil? %>
-                  <p id="profits-<%=wallet.id%>"> <%= wallet.current_profit %> </p>
+                  <p id="profits-<%=wallet.id%>"> <%= wallet.current_profit %> <span class="badge"> <%= wallet.currency %> </p>
               <% else %>
                   <p class="badge badge-warning"> Error, please try again </p>
               <% end %>

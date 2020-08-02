@@ -60,7 +60,7 @@ class WalletsController < ApplicationController
   private
 
   def wallet_params
-    params.require(:wallet).permit(:ticker, :name, :buy_date, :buy_price, :trading_fee, :selling_fee, :amount_bought)
+    params.require(:wallet).permit(:ticker, :name, :buy_date, :buy_price, :currency, :trading_fee, :selling_fee, :amount_bought)
   end
 
   def set_wallet_entry
@@ -79,6 +79,6 @@ class WalletsController < ApplicationController
   end
 
   def set_current_profit
-    @wallet.current_profit = @wallet.calc_current_profit(@wallet.ticker, @wallet.amount_bought, @wallet.buy_price)
+    @wallet.current_profit = @wallet.calc_current_profit(@wallet.ticker, @wallet.amount_bought, @wallet.buy_price, @wallet.currency)
   end
 end
