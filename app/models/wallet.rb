@@ -28,7 +28,7 @@ class Wallet < ApplicationRecord
 
   def value_sold_crypto_at_current_price(ticker, amount_bought, buy_price)
     begin
-      bought_crypto(amount_bought, buy_price) * Stock.new_lookup(ticker).last_price
+      bought_crypto(amount_bought, buy_price) * Stock.new_crypto_lookup(ticker).last_price
     rescue => e
       p "Error occured: #{e}"
       nil

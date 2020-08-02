@@ -14,6 +14,16 @@ class Stock < ApplicationRecord
     end
   end
 
+  def self.new_crypto_lookup(ticker_symbol)
+    crypto = create_client.crypto(ticker_symbol)
+    begin
+      new(ticker: ticker_symbol, name: crypto.symbol, last_price: crypto.latest_price)
+    rescue => exception
+      puts "Exception when retrieving stock course: #{exception}"
+      return nil
+    end
+  end
+
   def self.logo_look_up(ticker_symbol)
     create_client.logo(ticker_symbol).url
   end
