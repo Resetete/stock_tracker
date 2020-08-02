@@ -14,10 +14,9 @@ class Stock < ApplicationRecord
     end
   end
 
-  def self.new_crypto_lookup(ticker_symbol)
-    crypto = create_client.crypto(ticker_symbol)
+  def self.new_crypto_lookup(ticker_symbol, currency = 'EUR')
     begin
-      new(ticker: ticker_symbol, name: crypto.symbol, last_price: crypto.latest_price)
+      new(ticker: ticker_symbol, last_price: call_crypto_api(ticker_symbol, currency = 'EUR'))
     rescue => exception
       puts "Exception when retrieving stock course: #{exception}"
       return nil
@@ -37,5 +36,12 @@ class Stock < ApplicationRecord
   def self.create_client
     IEX::Api::Client.new(publishable_token: Rails.application.credentials.iex_client[:sandbox_api_key],
                                   endpoint: 'https://sandbox.iexapis.com/v1')
+  end
+
+  def self.call_crypto_api(ticker_symbol, currency = 'EUR')
+    # https://min-api.cryptocompare.com/documentation
+    api_url = URI.parse("https://min-api.cryptocompare.com/data/price?fsym=#{ticker_symbol}&tsyms=#{currency}")
+    response = Net::HTTP.get_response(api_url)
+    json_response = JSON.parse(response.body)[currency]
   end
 end
