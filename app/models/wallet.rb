@@ -1,4 +1,8 @@
 class Wallet < ApplicationRecord
+  #validates :ticker, presence: true
+  #validates :amount_bought, presence: true
+  #validates :buy_price, presence: true
+
   belongs_to :user
 
   def self.get_ticker_options

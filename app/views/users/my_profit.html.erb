@@ -1,8 +1,12 @@
-<h1> My profit </h1>
+<h1> My cryptocurrency profit </h1>
+
+<h3> Wallet entries </h3>
 
 <% if !@wallets.empty? %>
   <%= render 'wallets/list' %>
 <% end %>
+
+<%= link_to 'Add new', new_wallet_path, class: 'btn btn-info mb-5' %>
 
 <h3> Total profit if everything would be sold now </h3>
 

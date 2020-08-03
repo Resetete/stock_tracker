@@ -41,7 +41,7 @@ class WalletsController < ApplicationController
 
   def destroy
     @wallet.destroy
-    flash[:notice] = "#{@wallet.ticker} bought on #{@wallet.buy_date.strftime("%d-%m-%Y")} was successfully deleted"
+    flash[:notice] = "#{@wallet.ticker} bought on #{ @wallet.buy_date ? @wallet.buy_date.strftime("%d-%m-%Y") : 'unknown date'} was successfully deleted"
     redirect_to my_profit_path
   end
 
