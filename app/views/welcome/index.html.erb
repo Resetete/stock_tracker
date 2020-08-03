@@ -1,7 +1,6 @@
 <div class="jumbotron">
   <h1 class="display-4 highlighting">Welcome to FinanceTracker!</h1>
   <p class="lead"><p> This app allows to track different stock prices and to calculate your profit trading cryptocurrency. </p>
-  <hr class="my-4">
   <p class='highlighting'> Get on board! </p>
   <%= link_to new_user_session_path, class: 'btn btn-info btn-lg' do  %>
     <%= fa_icon 'sign-in' %>
@@ -11,6 +10,12 @@
     <%= fa_icon 'user-plus' %>
     Sign up
   <% end %>
+
+  <div class="example-account light-background mt-3">
+    <p> Want to test the website without an Account? Try Max Mustermann! </p>
+    <p> User email: max@example.com </p>
+    <p> Password: PasswordExample123 </p>
+  </div>
   <div id="freepik-link">
     <a href='https://de.freepik.com/vektoren/hintergrund'>Background image created by pikisuperstar - de.freepik.com</a>
   </div>
