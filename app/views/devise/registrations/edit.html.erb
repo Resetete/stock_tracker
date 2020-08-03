@@ -46,7 +46,9 @@
     </div>
     <% end %>
 
-    <p><%= t('.unhappy') %>? <%= link_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure') }, method: :delete %>.</p>
+    <% if current_user == !(current_user.first_name == 'Max' && current_user.last_name == 'Mustermann') %>
+      <p><%= t('.unhappy') %>? <%= link_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure') }, method: :delete %>.</p>
+    <% end %>
 
     <%= link_to t('.back'), :back %>
   </div>
