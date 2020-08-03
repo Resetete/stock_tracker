@@ -6,7 +6,7 @@ class Wallet < ApplicationRecord
   belongs_to :user
 
   def self.get_ticker_options
-    %w[ETH BTC USDC XLM BCH ZEC REP BAT XRP LTC ZRX EOS OXT DAI XTZ COMP KNC ALGO ATOM DASH ETC MKR OMG].freeze
+    %w[ETH BTC USDC XLM BCH ZEC REP BAT LINK XRP LTC ZRX EOS OXT DAI XTZ COMP KNC ALGO ATOM DASH ETC MKR OMG].sort.freeze
   end
 
   def calc_current_profit(ticker, amount_bought, buy_price, currency ='EUR')
