@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :set_wallet_entry, only: [:show, :edit, :update, :update_profit, :destroy]
+  before_action :set_wallet_entry, only: [:show, :edit, :update, :update_profit, :destroy, :sell]
   before_action :require_same_user, only: [:show]
   before_action :get_ticker_options, only: [:new, :edit]
 
@@ -55,6 +55,23 @@ class WalletsController < ApplicationController
     else
       flash.now[:alert] = "Something went wrong, please try again"
     end
+  end
+
+  def sell
+    if @wallet
+      @wallet.sold = true
+      if @wallet.save
+        flash[:notice] = 'The entry was successfully set to sold'
+        redirect_to my_profit_path
+      else
+        flash[:alert] = 'Something went wrong'
+        redirect_to my_profit_path
+      end
+    else
+      flash[:alert] = 'The entry was not found'
+      redirect_to my_profit_path
+    end
+
   end
 
   private
