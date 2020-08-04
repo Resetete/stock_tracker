@@ -31,6 +31,7 @@
           </td>
           <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
           <td>
+            <%= link_to 'View', wallet_path(wallet), class: 'badge badge-info' %>
             <%= link_to 'Edit', edit_wallet_path(wallet), class: 'badge badge-info' %>
             <%= link_to 'Delete', wallet_path(wallet), method: :delete, class: 'badge badge-danger', data: { confirm: 'Are you sure?' } %>
             <% if !wallet.sold %>

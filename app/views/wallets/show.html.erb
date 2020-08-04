@@ -2,7 +2,7 @@
 
 <div class="card">
   <div class="card-header text-center">
-    <%= @wallet.ticker %>
+    <strong><%= @wallet.ticker %> </strong> - Owner: <%= @wallet.user.first_name %> <%= @wallet.user.last_name %>
   </div>
   <div class="card-body text-left">
     <div class= "row">
@@ -10,24 +10,30 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"> Name: </li>
           <li class="list-group-item"> Price at buy: </li>
+          <li class="list-group-item"> Currency: </li>
           <li class="list-group-item"> Buy date: </li>
           <li class="list-group-item"> Trading fee: </li>
+          <li class="list-group-item"> Selling fee: </li>
           <li class="list-group-item"> Current profit: </li>
           <li class="list-group-item"> Sell price: </li>
           <li class="list-group-item"> Date of sell: </li>
           <li class="list-group-item"> Owner: </li>
+          <li class="list-group-item"> Sold? </li>
         </ul>
       </div>
       <div class="col-sm">
         <ul class="list-group list-group-flush">
           <li class="list-group-item min-height"> <%= @wallet.name %> </li>
           <li class="list-group-item min-height"> <%= @wallet.buy_price %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.currency %> </li>
           <li class="list-group-item min-height"> <%= @wallet.buy_date %> </li>
           <li class="list-group-item min-height"> <%= @wallet.trading_fee %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.selling_fee %> </li>
           <li class="list-group-item min-height"> <%= @wallet.current_profit %> </li>
           <li class="list-group-item min-height"> <%= @wallet.sell_price %> </li>
           <li class="list-group-item min-height"> <%= @wallet.sell_date %> </li>
           <li class="list-group-item min-height"> <%= @wallet.user.first_name %> <%= @wallet.user.last_name %> </li>
+          <li class="list-group-item min-height"> <%= @wallet.sold ? 'true' : 'false' %> </li>
         </ul>
       </div>
     </div>
