@@ -23,10 +23,6 @@ class Stock < ApplicationRecord
     end
   end
 
-  def self.logo_look_up(ticker_symbol)
-    create_client.logo(ticker_symbol).url
-  end
-
   def self.check_db(ticker_symbol)
     where(ticker: ticker_symbol).first
   end
