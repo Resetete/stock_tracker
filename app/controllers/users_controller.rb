@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     if current_user.first_name == 'Max' && current_user.last_name == 'Mustermann'
       flash.now[:alert] = "Only for testing purposes. Do not enter your real values!"
     end
+    @total_invested = @wallets.sum(:amount_bought)
   end
 
   def show

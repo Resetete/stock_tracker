@@ -8,6 +8,10 @@
 
 <%= link_to 'Add new', new_wallet_path, class: 'btn btn-info mb-5' %>
 
-<h3> Total profit if everything would be sold now </h3>
+<h3> Total invested </h3>
+<h4> <span class="badge badge-info mb-1"> <%= @total_invested %> </span> </h4>
 
-<h4> <span class="badge badge-info mb-5"> <%= @total_profit %> </span> </h4>
+<h3> Total profit if everything would be sold now </h3>
+<h4> <span class="badge badge-info mb-1"> <%= @total_profit %> </span> </h4>
+
+<h4> Benefit/Growth <span class="badge badge-info mb-5"> <%= ((@total_profit/@total_invested)*100).round(2) %> % </span> </h4>
