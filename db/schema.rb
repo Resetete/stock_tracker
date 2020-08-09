@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_142316) do
+ActiveRecord::Schema.define(version: 2020_08_09_194453) do
 
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_142316) do
     t.decimal "amount_bought"
     t.string "currency"
     t.boolean "sold"
+    t.decimal "last_price", precision: 10, scale: 2
   end
 
   add_foreign_key "friendships", "users"

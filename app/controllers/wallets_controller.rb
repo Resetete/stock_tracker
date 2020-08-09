@@ -48,7 +48,8 @@ class WalletsController < ApplicationController
   def update_profit
     if @wallet
       updated_profit = @wallet.calc_current_profit(@wallet.ticker, @wallet.amount_bought, @wallet.buy_price)
-      @wallet.update(current_profit: updated_profit)
+      last_price = Stock.new_crypto_lookup(@wallet.ticker, @wallet.currency).last_price
+      @wallet.update(current_profit: updated_profit, last_price: last_price)
       respond_to do |format|
         format.js { render partial: 'wallets/updated_profit_result' }
       end

@@ -8,6 +8,7 @@
           <th scope="col"> Bought on </th>
           <th scope="col"> Invested</th>
           <th scope="col"> Course when bought </th>
+          <th scope="col"> Current course </th>
           <th scope="col"> Current profit</th>
           <th scope="col"> Last updated </th>
           <th scope="col"> Actions </th>
@@ -22,6 +23,13 @@
           <td> <%= wallet.buy_date.strftime("%d-%m-%Y") if wallet.buy_date %> </td>
           <td> <%= wallet.amount_bought %> <span class="badge"> <%= wallet.currency %> </span> </td>
           <td> <%= wallet.buy_price %> <span class="badge"> <%= wallet.currency %> </td>
+          <td>
+            <% if !wallet.last_price.nil? %>
+                <p id="current-price-<%=wallet.id%>"> <%= wallet.last_price %> <span class="badge"> <%= wallet.currency %> </p>
+            <% else %>
+                <p class="badge badge-warning"> Error, please try again </p>
+            <% end %>
+          </td>
           <td>
               <% if !wallet.current_profit.nil? %>
                   <p id="profits-<%=wallet.id%>"> <%= wallet.current_profit %> <span class="badge"> <%= wallet.currency %> </p>
