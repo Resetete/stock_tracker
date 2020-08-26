@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'search_stock', to: 'stocks#search'
   get 'search_friend', to: 'friends#search'
   get 'update_profit/:id', to: 'wallets#update_profit', as: 'update_profit'
+  get 'update_daily_profits', to: 'profits#update_daily_profit', as: 'update_daily_profits'
   get 'sells/:id', to: 'wallets#sell', as: 'sell'
 
   resources :view_users, controller: 'users', only: [:show]

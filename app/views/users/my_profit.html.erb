@@ -15,3 +15,6 @@
 <h4> <span class="badge badge-info mb-1"> <%= @total_profit %> </span> </h4>
 
 <h4> Benefit/Growth <span class="badge badge-info mb-5"> <%= ((@total_profit/@total_invested)*100).round(2) %> % </span> </h4>
+
+
+<%= render 'profits/profit_graph' %>
