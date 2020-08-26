@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :friends, through: :friendships
   has_many :wallets, dependent: :destroy
+  has_many :profits, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -53,7 +54,7 @@ class User < ApplicationRecord
   end
 
   def current_profit_in_percentage(wallet)
-    
+
   end
 
   def self.search(friend_first_name, friend_name_email)

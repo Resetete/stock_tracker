@@ -1,4 +1,5 @@
 class Profit < ApplicationRecord
+  belongs_to :user
 
   def self.daily_profit
     tickers.each do |ticker|
@@ -6,7 +7,7 @@ class Profit < ApplicationRecord
         date_range.each do |date|
           profit = calc_profit(wallet_entry.ticker, date, wallet_entry.amount_bought, wallet_entry.buy_price, wallet_entry.trading_fee, wallet_entry.selling_fee)
           begin
-            Profit.create(ticker: wallet_entry.ticker, profit: profit, date: date)
+            Profit.create(ticker: wallet_entry.ticker, profit: profit, date: date, user_id: wallet_entry.user_id)
           rescue => e
             p "Error occured: #{e}"
             nil
@@ -16,6 +17,7 @@ class Profit < ApplicationRecord
     end
   end
 
+  # move to private?
   def self.calc_profit(ticker, date, amount_bought, buy_price, trading_fee, selling_fee)
     if call_crypto_api_historical(ticker, date).nil?
       nil
@@ -61,7 +63,6 @@ class Profit < ApplicationRecord
   def self.call_crypto_api_historical(ticker_symbol, timestamp, currency = 'EUR')
     # https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataPriceHistorical
     # convert DateTime object to unixtime --> DateTime.new().to_time.to_i
-    p timestamp
     begin
       api_url = URI.parse("https://min-api.cryptocompare.com/data/pricehistorical?fsym=#{ticker_symbol}&tsyms=#{currency}&ts=#{timestamp.to_time.to_i}")
       response = Net::HTTP.get_response(api_url)
