@@ -78,7 +78,7 @@ class WalletsController < ApplicationController
   private
 
   def wallet_params
-    params.require(:wallet).permit(:ticker, :name, :buy_date, :buy_price, :currency, :trading_fee, :selling_fee, :amount_bought)
+    params.require(:wallet).permit(:ticker, :name, :comments, :bank, :buy_date, :buy_price, :currency, :trading_fee, :selling_fee, :amount_bought)
   end
 
   def set_wallet_entry

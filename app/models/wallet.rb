@@ -46,4 +46,8 @@ class Wallet < ApplicationRecord
   def fees?
     trading_fee.nil? || selling_fee.nil?
   end
+
+  def current_profit_in_percentage
+    (((current_profit+amount_bought)/amount_bought)*100-100).round(2)
+  end
 end

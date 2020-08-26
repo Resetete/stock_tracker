@@ -52,6 +52,10 @@ class User < ApplicationRecord
     User.where(first_name: first_name, last_name: last_name)
   end
 
+  def current_profit_in_percentage(wallet)
+    
+  end
+
   def self.search(friend_first_name, friend_name_email)
     # remove any extra characters such as spaces
     friend_first_name.strip!

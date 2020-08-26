@@ -5,11 +5,12 @@
         <tr>
           <th scope="col"> Ticker </th>
           <th scope="col"> Name </th>
+          <th scope="col"> Bank </th>
           <th scope="col"> Bought on </th>
           <th scope="col"> Invested</th>
           <th scope="col"> Course when bought </th>
           <th scope="col"> Current course </th>
-          <th scope="col"> Current profit</th>
+          <th scope="col" colspan="2"> Current profit</th>
           <th scope="col"> Last updated </th>
           <th scope="col"> Actions </th>
           <th> Sold? </th>
@@ -20,6 +21,7 @@
         <tr>
           <th scope="row"> <%= wallet.ticker %> </th>
           <td> <%= wallet.name %> </td>
+          <td> <%= wallet.bank %> </td>
           <td> <%= wallet.buy_date.strftime("%d-%m-%Y") if wallet.buy_date %> </td>
           <td> <%= wallet.amount_bought %> <span class="badge"> <%= wallet.currency %> </span> </td>
           <td> <%= wallet.buy_price %> <span class="badge"> <%= wallet.currency %> </td>
@@ -37,6 +39,7 @@
                   <p class="badge badge-warning"> Error, please try again </p>
               <% end %>
           </td>
+          <td> <%= wallet.current_profit_in_percentage %> % </td>
           <td> <%= time_ago_in_words(wallet.updated_at) %> ago </td>
           <td>
             <%= link_to 'View', wallet_path(wallet), class: 'badge badge-info' %>
