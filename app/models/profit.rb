@@ -41,11 +41,12 @@ class Profit < ApplicationRecord
   private
 
   def self.start_date
-    DateTime.new(2020, 8, 23, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
+    DateTime.new(2020, 8, 20, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
   end
 
   def self.end_date
-    DateTime.current
+    DateTime.new(2020, 8, 22, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
+    #DateTime.current
   end
 
   def self.tickers
