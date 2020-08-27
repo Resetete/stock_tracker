@@ -16,6 +16,7 @@ class UsersController < ApplicationController
       flash.now[:alert] = "Only for testing purposes. Do not enter your real values!"
     end
     @total_invested = @wallets.sum(:amount_bought)
+    @graph_data = Profit.where(user_id: current_user)
   end
 
   def show

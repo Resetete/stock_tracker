@@ -2,7 +2,7 @@
 
 <!-- https://www.sitepoint.com/make-easy-graphs-and-charts-on-rails-with-chartkick/ -->
 <div id="profit-graph">
-  <%= line_chart @graph_data.group(:ticker).group_by_day(:date).sum(:profit) %>
+  <%= profit_per_ticker(@graph_data) %>
 </div>
 
 <%= link_to 'Update', update_daily_profits_path, method: :get, remote: false, class: 'btn btn-info mt-3 mb-3 pull-right' %>
