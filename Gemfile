@@ -23,6 +23,7 @@ gem 'rest-client'
 
 # graphs
 gem "chartkick"
+gem 'groupdate'
 
 
 # user authentication

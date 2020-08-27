@@ -1,5 +1,7 @@
 <h1> Development of total profit </h1>
 
-<div id="total-profits-graph"> Graph of profit </div>
+<div id="profit-graph">
+  <%= line_chart @graph_data.group(:ticker).group_by_day(:date).sum(:profit) %>
+</div>
 
-<%= link_to 'Update', update_daily_profits_path, method: :get, remote: true, class: 'btn' %>
+<%= link_to 'Update', update_daily_profits_path, method: :get, remote: false, class: 'btn btn-info mt-3 mb-3 pull-right' %>
