@@ -48,6 +48,10 @@ class Wallet < ApplicationRecord
   end
 
   def current_profit_in_percentage
-    (((current_profit+amount_bought)/amount_bought)*100-100).round(2)
+    if current_profit
+      (((current_profit + amount_bought) / amount_bought)* 100 - 100).round(2)
+    else
+      nil
+    end
   end
 end

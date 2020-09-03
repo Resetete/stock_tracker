@@ -26,6 +26,7 @@ gem "chartkick"
 gem 'groupdate'
 
 
+
 # user authentication
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'

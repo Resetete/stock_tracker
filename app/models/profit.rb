@@ -1,58 +1,62 @@
 class Profit < ApplicationRecord
   belongs_to :user
 
-  def self.daily_profit(user)
+  def self.daily_profit(current_user)
     tickers.each do |ticker|
-      find_wallet_entries(ticker).each do |wallet_entry|
-        date_range(user).each do |date|
-          p "Date range: #{date_range(user)}"
-          p "Ticker: #{ticker}"
-          p "Date: #{date}"
-
+      find_wallet_entries(ticker, current_user).each do |wallet_entry|
+        p "Date range: #{date_range(wallet_entry)}"
+        date_range(wallet_entry).each do |date|
+          p "date range: #{date}"
+          p "user: #{current_user}"
           profit = calc_profit(wallet_entry.ticker, date, wallet_entry.amount_bought, wallet_entry.buy_price, wallet_entry.trading_fee, wallet_entry.selling_fee)
+          p "Profit: #{profit}"
+          max_retries = 3
+          times_retried = 0
           begin
             Profit.create(ticker: wallet_entry.ticker, profit: profit, date: date, user_id: wallet_entry.user_id)
           rescue => e
-            p "Error occured: #{e}"
-            nil
+            if times_retried < max_retries
+              times_retried += 1
+              puts "Error occured: #{e}; retry #{times_retried}/#{max_retries}"
+              byebug
+              retry
+            else
+              puts "Exiting script; it is unlikely to solve the error of catching data"
+              exit(1)
+            end
           end
         end
       end
     end
   end
 
-
-
-  def daily_total_profit
-  end
-
-
   private
 
-  def self.start_date(user)
-    Profit.where(user_id: user).order(date: :desc).first.date + 1.day
-    #DateTime.new(2020, 8, 20, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
+  def self.start_date(wallet_entry)
+    #Wallet.where(user_id: current_user, ticker: ticker, buy_date: buy_date).order(date: :desc).first.buy_date + 1.day
+    #DateTime.new(2020, 8, 28, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
+    Wallet.find(wallet_entry.id).buy_date.to_date + 1.day
   end
 
   def self.end_date
-    #DateTime.new(2020, 8, 21, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
+    #DateTime.new(2020, 9, 2, 0, 0, 0) # should be the first bought_on where total profit in profits table is empty
     DateTime.yesterday
   end
 
-  def already_fetched? # checks if date is already in database
-    Profit.where(user_id: user).order(date: :desc).first.date == end_date
+  def already_fetched?(ticker) # checks if date is already in database --> TO DO!
+    Profit.where(user_id: current_user, ticker: ticker).order(date: :desc).first.date == end_date
   end
 
   def self.tickers
     Wallet.distinct.pluck(:ticker)
   end
 
-  def self.date_range(user)
-    start_date(user)..end_date
+  def self.date_range(wallet_entry)
+    start_date(wallet_entry)..end_date
   end
 
-  def self.find_wallet_entries(ticker)
-    Wallet.where(ticker: ticker)
+  def self.find_wallet_entries(ticker, current_user)
+    Wallet.where(ticker: ticker, user_id: current_user)
   end
 
   def self.call_crypto_api_historical(ticker_symbol, timestamp, currency = 'EUR')
@@ -60,8 +64,11 @@ class Profit < ApplicationRecord
     # convert DateTime object to unixtime --> DateTime.new().to_time.to_i
     begin
       api_url = URI.parse("https://min-api.cryptocompare.com/data/pricehistorical?fsym=#{ticker_symbol}&tsyms=#{currency}&ts=#{timestamp.to_time.to_i}")
+      p api_url
       response = Net::HTTP.get_response(api_url)
+      p response
       json_response = JSON.parse(response.body)[ticker_symbol][currency]
+      p json_response
     rescue => e
       p "Error when fetching historical course: #{e}"
       p ticker_symbol

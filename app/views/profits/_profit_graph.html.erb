@@ -5,4 +5,8 @@
   <%= profit_per_ticker(@graph_data) %>
 </div>
 
+<div id="total-profit-graph">
+  <%= total_profit(@graph_data) %>
+</div>
+
 <%= link_to 'Update', update_daily_profits_path, method: :get, remote: false, class: 'btn btn-info mt-3 mb-3 pull-right' %>
