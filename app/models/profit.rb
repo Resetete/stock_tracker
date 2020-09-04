@@ -8,20 +8,7 @@ class Profit < ApplicationRecord
         date_range(wallet_entry).each do |date|
           if !already_fetched?(date, ticker, current_user)
             profit = calc_profit(wallet_entry.ticker, date, wallet_entry.amount_bought, wallet_entry.buy_price, wallet_entry.trading_fee, wallet_entry.selling_fee)
-            max_retries = 3
-            times_retried = 0
-            begin
-              Profit.create(ticker: wallet_entry.ticker, profit: profit, date: date, user_id: wallet_entry.user_id)
-            rescue => e
-              if times_retried < max_retries
-                times_retried += 1
-                puts "Error occured: #{e}; retry #{times_retried}/#{max_retries}"
-                retry
-              else
-                puts 'Exiting script; it is unlikely to solve the error of catching data'
-                exit(1)
-              end
-            end
+            Profit.create(ticker: wallet_entry.ticker, profit: profit, date: date, user_id: wallet_entry.user_id)
           else
             @msg.push("#{wallet_entry.ticker}, #{date}")
           end
@@ -66,12 +53,21 @@ class Profit < ApplicationRecord
   def self.call_crypto_api_historical(ticker_symbol, timestamp, currency = 'EUR')
     # https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataPriceHistorical
     # convert DateTime object to unixtime --> DateTime.new().to_time.to_i
+    max_retries = 3
+    times_retried = 0
     begin
       api_url = URI.parse("https://min-api.cryptocompare.com/data/pricehistorical?fsym=#{ticker_symbol}&tsyms=#{currency}&ts=#{timestamp.to_time.to_i}")
       response = Net::HTTP.get_response(api_url)
       json_response = JSON.parse(response.body)[ticker_symbol][currency]
     rescue => e
-      nil
+      if times_retried < max_retries
+        times_retried += 1
+        puts "Error occured: #{e}; retry #{times_retried}/#{max_retries}"
+        retry
+      else
+        puts 'Exiting script; it is unlikely to solve the error of catching data'
+        nil
+      end
     end
   end
 
@@ -79,15 +75,19 @@ class Profit < ApplicationRecord
     if call_crypto_api_historical(ticker, date).nil?
       nil
     else
-      profit = bought_crypto(amount_bought, buy_price) * call_crypto_api_historical(ticker, date) - amount_bought
-      if fees?(trading_fee, selling_fee)
-        if profit > 0
-          profit - fees(trading_fee, selling_fee)
+      begin
+        profit = bought_crypto(amount_bought, buy_price) * call_crypto_api_historical(ticker, date) - amount_bought
+        if fees?(trading_fee, selling_fee)
+          if profit > 0
+            profit - fees(trading_fee, selling_fee)
+          else
+            profit + fees(trading_fee, selling_fee)
+          end
         else
-          profit + fees(trading_fee, selling_fee)
+          profit
         end
-      else
-        profit
+      rescue => e
+        p "Error when calculating profit #{e}"
       end
     end
   end
