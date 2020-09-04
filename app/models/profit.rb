@@ -2,7 +2,7 @@ class Profit < ApplicationRecord
   belongs_to :user
 
   def self.daily_profit(current_user)
-    @msg = []
+    @msg = ['Already up to date:']
     tickers.each do |ticker|
       find_wallet_entries(ticker, current_user).each do |wallet_entry|
         date_range(wallet_entry).each do |date|
@@ -19,12 +19,12 @@ class Profit < ApplicationRecord
                 byebug
                 retry
               else
-                puts "Exiting script; it is unlikely to solve the error of catching data"
+                puts 'Exiting script; it is unlikely to solve the error of catching data'
                 exit(1)
               end
             end
           else
-            @msg.push("#{wallet_entry.ticker} and date #{date}, Already up to date")
+            @msg.push("#{wallet_entry.ticker}, #{date}")
           end
         end
       end
