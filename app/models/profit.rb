@@ -16,7 +16,6 @@ class Profit < ApplicationRecord
               if times_retried < max_retries
                 times_retried += 1
                 puts "Error occured: #{e}; retry #{times_retried}/#{max_retries}"
-                byebug
                 retry
               else
                 puts 'Exiting script; it is unlikely to solve the error of catching data'
