@@ -62,7 +62,7 @@ class Profit < ApplicationRecord
     rescue => e
       if times_retried < max_retries
         times_retried += 1
-        puts "Error occured: #{e}; retry #{times_retried}/#{max_retries}"
+        puts "Error occured fetching crypto data: #{e}; retry #{times_retried}/#{max_retries}"
         retry
       else
         puts 'Exiting script; it is unlikely to solve the error of catching data'
