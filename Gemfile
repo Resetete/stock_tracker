@@ -45,7 +45,15 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
-  gem 'rspec'
+  # rspec tests
+  gem 'rspec-rails', ">= 3.9.0"
+  # one-line statements for test execution
+  gem 'shoulda-matchers'
+  # FactoryBot to create objects
+  gem 'factory_bot_rails'
+  # check how much of the code is covered with tests
+  gem 'simplecov'
+  gem 'database_cleaner'
 end
 
 group :development do

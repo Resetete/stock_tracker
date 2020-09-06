@@ -2,7 +2,7 @@ class Profit < ApplicationRecord
   belongs_to :user
 
   def self.daily_profit(current_user)
-    @msg = ['Already up to date:']
+    @msg = ['Already up to date:'] # use add.errors[] message
     tickers.each do |ticker|
       find_wallet_entries(ticker, current_user).each do |wallet_entry|
         date_range(wallet_entry).each do |date|
@@ -33,8 +33,10 @@ class Profit < ApplicationRecord
   def self.already_fetched?(date, ticker, current_user) # checks if the profit for a ticker was already calculated
     if Profit.where(user_id: current_user, ticker: ticker).empty?
       false
-    elsif Profit.where(user_id: current_user, ticker: ticker).order(date: :desc).first.date >= date
+    elsif Profit.where(user_id: current_user, ticker: ticker).order(date: :desc).first.date == date
       true
+    else
+      false
     end
   end
 
